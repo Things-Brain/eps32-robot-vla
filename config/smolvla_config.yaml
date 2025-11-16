@@ -1,0 +1,61 @@
+# SmolVLA Fine-tuning Configuration for ESP32-CAM Robot
+
+output_dir: "./outputs/smolvla_esp32_robot"
+seed: 42
+
+# Model configuration
+model:
+  name: "lerobot/smolvla_base"
+  vision_encoder: "siglip-so400m-patch14-384"
+  action_dim: 2  # Left motor, Right motor
+  state_dim: 6   # IMU: accel_xyz, gyro_xyz
+  max_motor_speed: 255.0
+  image_size: [224, 224]
+
+# LoRA configuration
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - "q_proj"
+    - "v_proj"
+    - "k_proj"
+    - "o_proj"
+  bias: "none"
+  task_type: "CAUSAL_LM"
+
+# Training configuration
+training:
+  batch_size: 8
+  learning_rate: 1.0e-4
+  num_train_steps: 20000
+  warmup_steps: 1000
+  gradient_accumulation_steps: 4
+  max_grad_norm: 1.0
+  weight_decay: 0.01
+  
+  eval_steps: 500
+  save_steps: 1000
+  logging_steps: 100
+  
+  device: "cuda"
+  mixed_precision: "bf16"
+  num_workers: 4
+  pin_memory: true
+
+# Dataset configuration
+data:
+  dataset_path: "./data/robot_dataset"
+  train_split: 0.9
+  fps: 10
+  max_episode_length: 1000
+  augmentation: true
+
+# Weights & Biases configuration
+wandb:
+  project: "smolvla-esp32-robot"
+  entity: null
+  run_name: "esp32_finetune_v1"
+  log_model: true
+  enabled: true
