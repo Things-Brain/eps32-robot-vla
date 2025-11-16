@@ -24,8 +24,6 @@ esp32-robot-vla/
 ├── data/ # 학습 데이터셋 (가공된 MQTT 데이터)
 └── outputs/ # 학습 결과 및 체크포인트
 
-text
-
 ## 설치 및 실행
 
 ### 1. uv 설치 및 프로젝트 초기화
@@ -33,24 +31,16 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv init esp32-robot-vla
 cd esp32-robot-vla
 
-text
-
 ### 2. 의존성 설치
 uv sync
 uv sync --all-extras
-
-text
 
 ### 3. 데이터 준비
 수집한 MQTT 원시 데이터를 전처리하여 학습용 데이터셋 준비:
 uv run scripts/prepare_data.py --input ./raw_data --output ./data/robot_dataset --resize 224 224
 
-text
-
 ### 4. 파인튜닝 실행
 uv run scripts/train.py --config config/smolvla_config.yaml
-
-text
 
 ## 참고 및 추가 정보
 - 학습 로그 및 모델 체크포인트는 `outputs/` 폴더에 저장됩니다.
