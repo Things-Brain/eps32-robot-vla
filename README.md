@@ -52,4 +52,4 @@ uv run scripts/train.py --config config/smolvla_config.yaml
 MIT License
 
 ## 문의
-프로젝트 관련 문의나 개선 제안은 이슈 트래커에 남겨주세요.
+프로젝트 관련 문의나 개선 제안은 이슈 트래커에 남겨주세요. 
